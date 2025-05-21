@@ -1,0 +1,406 @@
+indexزhtml
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Alkan Love</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0; padding: 0; color: white;
+    text-align: center;
+    transition: background-image 1s ease-in-out;
+  }
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    min-height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+  h1 { font-size: 3rem; margin-bottom: 1rem; }
+  .section {
+    margin: 2rem auto;
+    max-width: 900px;
+    background: rgba(255 255 255 / 0.1);
+    border-radius: 15px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 0 15px rgba(255, 182, 193, 0.7);
+    text-align: left;
+  }
+  input[type=text], textarea {
+    width: 100%;
+    border-radius: 10px;
+    padding: 0.7rem;
+    margin-top: 0.5rem;
+    border: none;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    border: none;
+    background-color: #ff8da1;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.6rem;
+    box-shadow: 0 0 15px #ff8da1;
+    transition: box-shadow 0.3s ease;
+  }
+  button:hover {
+    box-shadow: 0 0 30px #ff5a7f;
+  }
+  .box {
+    position: relative;
+  }
+  /* Chat Boxes */
+  #messagesRakan, #messagesSaba {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-top: 1rem;
+    background: rgba(255 182 193 / 0.25);
+    border-radius: 10px;
+    padding: 0.5rem;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+  #messagesRakan { float: left; width: 45%; }
+  #messagesSaba { float: right; width: 45%; }
+  .clear { clear: both; }
+
+  /* Aura Sliders */
+  input[type=range] {
+    width: 200px;
+    vertical-align: middle;
+  }
+  #auraBubbles {
+    position: relative;
+    height: 60px;
+    margin-top: 10px;
+  }
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #ff5a7f;
+    opacity: 0.7;
+    animation: floatUpDown 4s ease-in-out infinite;
+  }
+  @keyframes floatUpDown {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.1); }
+  }
+
+  /* Clock styles */
+  #clocks {
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 0 auto 1rem auto;
+    padding: 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffc0cb;
+  }
+  #clocks div {
+    background: rgba(255 182 193 / 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #ff8da1;
+  }
+
+  /* Daily challenge */
+  #dailyChallenge {
+    background-color: rgba(255 255 255 / 0.1);
+    border: 2px dashed #ffd1dc;
+    padding: 1rem;
+    border-radius: 15px;
+    animation: floatUpDown 5s ease-in-out infinite;
+    max-width: 400px;
+    margin: 2rem auto;
+    text-align: center;
+    color: #ffe6f0;
+  }
+  #challengeText {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    min-height: 60px;
+  }
+
+  /* Memories and Chat saved messages */
+  #savedNotes, #savedChat {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-top: 1rem;
+    background: rgba(255 182 193 / 0.2);
+    border-radius: 10px;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+  }
+</style>
+</head>
+<body>
+  <div class="overlay">
+    <h1 style="text-align:center;">Alkan Love 💖</h1>
+
+    <!-- Clock for LA and Jordan -->
+    <div id="clocks">
+      <div id="laClock">LA Time: --:--:--</div>
+      <div id="jordanClock">Jordan Time: --:--:--</div>
+    </div>
+
+    <!-- Days Counter -->
+    <div class="section box">
+      <h2 style="text-align:center;">Days Since Our Love Began</h2>
+      <p id="counter" style="text-align:center; font-size: 1.5rem;"></p>
+    </div>
+
+    <!-- Love Messages -->
+    <div class="section box">
+      <h2 style="text-align:center;">Love Messages</h2>
+      <input type="text" id="loveInputRakan" placeholder="Rakan: Write a message" />
+      <button onclick="addLoveMessage('Rakan')">Add Rakan's Message</button>
+      <input type="text" id="loveInputSaba" placeholder="Saba: Write a message" style="margin-top:10px" />
+      <button onclick="addLoveMessage('Saba')">Add Saba's Message</button>
+
+      <div id="messagesRakan"></div>
+      <div id="messagesSaba"></div>
+      <div class="clear"></div>
+    </div>
+
+    <!-- Romantic Aura -->
+    <div class="section box">
+      <h2 style="text-align:center;">Romantic Aura 🌟</h2>
+      <label for="auraLevelRakan">Rakan's Aura Level:</label>
+      <input type="range" id="auraLevelRakan" min="10" max="100" step="1" value="50" />
+      <span id="rakanMood" style="font-size:1.5rem; margin-left: 10px;">🙂</span><br><br>
+
+      <label for="auraLevelSaba">Saba's Aura Level:</label>
+      <input type="range" id="auraLevelSaba" min="10" max="100" step="1" value="50" />
+      <span id="sabaMood" style="font-size:1.5rem; margin-left: 10px;">🙂</span><br>
+
+      <button onclick="saveAura()">Save Aura</button>
+      <div id="auraBubbles"></div>
+    </div>
+
+    <!-- ذكريات -->
+    <div class="section box">
+      <h2 style="text-align:center;">ذكريات</h2>
+      <textarea id="notes" placeholder="اكتب ذكرياتكم هنا..."></textarea><br />
+      <button onclick="saveNotes()">حفظ الذكريات</button>
+      <div id="savedNotes"></div>
+    </div>
+
+    <!-- فضفضة -->
+    <div class="section box">
+      <h2 style="text-align:center;">فضفضة</h2>
+      <textarea id="chatBox" placeholder="شارك مشاعرك وأفكارك هنا..."></textarea><br />
+      <button onclick="saveChat()">حفظ الفضفضة</button>
+      <div id="savedChat"></div>
+    </div>
+
+    <!-- Daily Challenge -->
+    <div class="section box" id="dailyChallenge">
+      <h2>Daily Challenge ⚡</h2>
+      <button onclick="showChallenge()">Reveal Today’s Challenge</button>
+      <p id="challengeText"></p>
+      <audio id="challengeMusic" src="https://cdn.pixabay.com/download/audio/2022/03/26/audio_993f6ab263.mp3?filename=upbeat-energetic-rock-ambience-6608.mp3"></audio>
+    </div>
+
+  </div>
+
+<script>
+  // Days Counter
+  const startDate = new Date("2024-07-11");
+  function updateDaysCounter() {
+    const today = new Date();
+    const diffTime = today - startDate;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("counter").textContent = `It has been ${diffDays} days since our love began ❤️`;
+  }
+  updateDaysCounter();
+
+  // Clock function for LA and Jordan
+  function updateClocks() {
+    const now = new Date();
+    const options = { hour: '2-digit', minute: '2-digit', second:'2-digit', hour12: false };
+    const laTime = now.toLocaleString("en-US", {timeZone: "America/Los_Angeles", ...options});
+    const jordanTime = now.toLocaleString("en-US", {timeZone: "Asia/Amman", ...options});
+    document.getElementById("laClock").textContent = `LA Time: ${laTime}`;
+    document.getElementById("jordanClock").textContent = `Jordan Time: ${jordanTime}`;
+  }
+  setInterval(updateClocks, 1000);
+  updateClocks();
+
+  // Love Messages Storage
+  function addLoveMessage(name) {
+    const inputId = name === "Rakan" ? "loveInputRakan" : "loveInputSaba";
+    const messagesId = name === "Rakan" ? "messagesRakan" : "messagesSaba";
+    const input = document.getElementById(inputId);
+    const messages = document.getElementById(messagesId);
+
+    if (input.value.trim() === "") return;
+
+    // Create message element
+    const msg = document.createElement("p");
+    msg.textContent = `${name}: ${input.value.trim()}`;
+    messages.appendChild(msg);
+
+    // Save to localStorage
+    let savedMessages = JSON.parse(localStorage.getItem(messagesId)) || [];
+    savedMessages.push(`${new Date().toLocaleString()}: ${name}: ${input.value.trim()}`);
+    localStorage.setItem(messagesId, JSON.stringify(savedMessages));
+
+    // Clear input
+    input.value = "";
+
+    // Load saved messages
+    loadSavedMessages(messagesId, messages);
+  }
+  function loadSavedMessages(id, container) {
+    container.innerHTML = "";
+    const savedMessages = JSON.parse(localStorage.getItem(id)) || [];
+    savedMessages.forEach(msg => {
+      const p = document.createElement("p");
+      p.textContent = msg;
+      container.appendChild(p);
+    });
+  }
+  loadSavedMessages("messagesRakan", document.getElementById("messagesRakan"));
+  loadSavedMessages("messagesSaba", document.getElementById("messagesSaba"));
+
+  // Aura functions
+  const auraLevelRakanEl = document.getElementById("auraLevelRakan");
+  const auraLevelSabaEl = document.getElementById("auraLevelSaba");
+  const rakanMoodEl = document.getElementById("rakanMood");
+  const sabaMoodEl = document.getElementById("sabaMood");
+  const auraBubblesEl = document.getElementById("auraBubbles");
+
+  function updateMood() {
+    rakanMoodEl.textContent = auraLevelRakanEl.value > 70 ? "😍" : auraLevelRakanEl.value > 40 ? "🙂" : "😔";
+    sabaMoodEl.textContent = auraLevelSabaEl.value > 70 ? "😍" : auraLevelSabaEl.value > 40 ? "🙂" : "😔";
+  }
+  auraLevelRakanEl.addEventListener("input", updateMood);
+  auraLevelSabaEl.addEventListener("input", updateMood);
+  updateMood();
+
+  function saveAura() {
+    localStorage.setItem("auraRakan", auraLevelRakanEl.value);
+    localStorage.setItem("auraSaba", auraLevelSabaEl.value);
+    renderBubbles();
+  }
+  auraLevelRakanEl.value = localStorage.getItem("auraRakan") || 50;
+  auraLevelSabaEl.value = localStorage.getItem("auraSaba") || 50;
+  updateMood();
+
+  function renderBubbles() {
+    auraBubblesEl.innerHTML = "";
+    let combinedAura = (parseInt(auraLevelRakanEl.value) + parseInt(auraLevelSabaEl.value)) / 2;
+    let count = Math.floor(combinedAura / 10);
+    for(let i = 0; i < count; i++) {
+      let bubble = document.createElement("div");
+      bubble.classList.add("bubble");
+      bubble.style.width = bubble.style.height = (10 + Math.random() * 15) + "px";
+      bubble.style.left = (Math.random() * 100) + "%";
+      bubble.style.animationDelay = (Math.random() * 4) + "s";
+      auraBubblesEl.appendChild(bubble);
+    }
+  }
+  renderBubbles();
+
+  // Background images array (romantic only)
+  const backgrounds = [
+    'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1350&q=80', // pink flowers
+    'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1350&q=80', // sunset couple
+    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=80', // heart light
+    'https://images.unsplash.com/photo-1470770903676-69b98201ea1c?auto=format&fit=crop&w=1350&q=80', // roses
+    'https://images.unsplash.com/photo-1468071174046-657d9d351a40?auto=format&fit=crop&w=1350&q=80'  // soft pink
+  ];
+
+  function updateBackground() {
+    const now = new Date();
+    const hour = now.getHours();
+    const index = Math.floor(hour / 2) % backgrounds.length;
+    document.body.style.backgroundImage = `url(${backgrounds[index]})`;
+  }
+  updateBackground();
+  setInterval(updateBackground, 1000 * 60 * 10);
+
+  // Memories (Notes) save and load
+  function saveNotes() {
+    const notes = document.getElementById("notes").value.trim();
+    if (!notes) return;
+    let savedNotes = JSON.parse(localStorage.getItem("savedNotes")) || [];
+    savedNotes.push(`${new Date().toLocaleString()} - ${notes}`);
+    localStorage.setItem("savedNotes", JSON.stringify(savedNotes));
+    loadNotes();
+    document.getElementById("notes").value = "";
+  }
+  function loadNotes() {
+    const container = document.getElementById("savedNotes");
+    container.innerHTML = "";
+    let savedNotes = JSON.parse(localStorage.getItem("savedNotes")) || [];
+    savedNotes.forEach(note => {
+      const p = document.createElement("p");
+      p.textContent = note;
+      container.appendChild(p);
+    });
+  }
+  loadNotes();
+
+  // Chat Box (فضفضة) save and load
+  function saveChat() {
+    const chat = document.getElementById("chatBox").value.trim();
+    if (!chat) return;
+    let savedChat = JSON.parse(localStorage.getItem("savedChat")) || [];
+    savedChat.push(`${new Date().toLocaleString()} - ${chat}`);
+    localStorage.setItem("savedChat", JSON.stringify(savedChat));
+    loadChat();
+    document.getElementById("chatBox").value = "";
+  }
+  function loadChat() {
+    const container = document.getElementById("savedChat");
+    container.innerHTML = "";
+    let savedChat = JSON.parse(localStorage.getItem("savedChat")) || [];
+    savedChat.forEach(chat => {
+      const p = document.createElement("p");
+      p.textContent = chat;
+      container.appendChild(p);
+    });
+  }
+  loadChat();
+
+  // Daily Challenge
+  const challenges = [
+    "Write a love poem to each other ❤️",
+    "Send a surprise gift 🎁",
+    "Cook dinner together 🍳",
+    "Watch a romantic movie 🎬",
+    "Take a walk under the stars ✨",
+    "Dance together for 5 minutes 💃🕺",
+    "Plan a future trip 🌍",
+    "Say 'I love you' in a new language 💬",
+    "Make a playlist of your favorite songs 🎵",
+    "Write down 3 things you love about each other ❤️"
+  ];
+
+  function showChallenge() {
+    const randomIndex = Math.floor(Math.random() * challenges.length);
+    const challengeText = document.getElementById("challengeText");
+    challengeText.textContent = challenges[randomIndex];
+    const music = document.getElementById("challengeMusic");
+    music.currentTime = 0;
+    music.play();
+  }
+</script>
+</body>
+</html>
